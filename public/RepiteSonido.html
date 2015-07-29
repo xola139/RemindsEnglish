@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es" >
+<head>
+
+<title>Remids English</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" type="text/css" href="css/stilos.css">
+<link rel="stylesheet" type="text/css" href="css/offline-language-spanish.css">
+
+<script type="text/javascript" src="js/offline.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
+
+
+<script>
+  $(document).ready(function(){
+
+    
+
+    $("#btnReproduce").click(function () { 
+      $("#mainFrame").attr("src", "http://translate.google.com/translate_tts?tl=en&q="+$("#txtpalabra").val());
+});
+
+  });
+
+</script>
+
+</head>
+<body>
+
+
+<input type="text" id="txtpalabra"/>
+<button id="btnReproduce">Reproduce</button>
+
+
+<iframe id="mainFrame" src="" width="150" height="150" ></iframe>
+
+
+</body>
+</html>
+
