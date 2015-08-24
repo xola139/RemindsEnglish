@@ -3,7 +3,9 @@
 <!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en"> <![endif]-->
 <!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en"> <![endif]-->
 <!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!--[if gt IE 9]><!-->
+
+<html class="no-js" lang="en" manifest="pushCorrect.appcache"><!--<![endif]-->
 	<head>
 		<meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -20,135 +22,20 @@
   
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery-ui.min.js"></script>
+		<script src="js/pushCorrect.js"></script>
 		
-		
-		<script >
-		
-	
-		
-		
-		var pushFirst=null;
-		$(document).ready(function(){
-			
-			function agregaItems(){
-				var localData = JSON.parse(localStorage.getItem('verbos'));
-			
-				$.each(localData.items,function (index,data){
-	            	$("#contenedor").after("<a id=\"boton_"+data.espanol.replace(/\s/g,"")+"\" class=\"common push-down\" lang=\"mx\" rel=\""+data.ingles.replace(/\s/g,"")+"\">"+data.espanol+"</a>");
-	            	$("#contenedor").append("<a id=\"boton_"+data.ingles.replace(/\s/g,"")+"\" class=\"common push-down\" lang=\"us\" rel=\""+data.espanol.replace(/\s/g,"")+"\">"+data.ingles+"</a>");
-	            })
-	            
-	            
-	            $("a[id^=boton]").click(function() {
-	 				
-	 				//Si no tiene la clase correcto no entra al cilco
-	 				if($("#"+this.id).hasClass( "correcto" )==false){		
-			 				//se escucha la palabra solo en ingles
-	 						
-	 						if(this.lang=='us'){
-					  				var msg = new SpeechSynthesisUtterance(this.text);
-	 					  			    window.speechSynthesis.speak(msg);
-	 					 	}
-	 						
-	 					
-			 				if($("#"+this.id).hasClass( "push-down-active" )==true){
-								$("#"+this.id).removeClass('push-down-active');
-								$("#"+this.id).addClass('push-down');	
-							}else{
-								$("#"+this.id).addClass('push-down-active');
-								$("#"+this.id).removeClass('push-down');
-							}
-			 				
-			 				
-			 				if(pushFirst==null){
-			 					pushFirst=this.id;
-			 				}else{
-			 					if($("#"+pushFirst)[0].rel==this.text.replace(/\s/g,"")){
-			 						//si ya es correcto le agregamos la clase correcto
-			 						
-			 						$("#"+this.id).addClass('correcto');
-			 						$("#"+pushFirst).addClass('correcto');
-			 						
-			 						pushFirst=null;
-			 					}else{
-			 						
-			 						$("#"+this.id).removeClass('push-down-active').addClass('push-down');;
-			 						$("#"+pushFirst).removeClass('push-down-active').addClass('push-down');
-			 						pushFirst=null;
-			 					}
-			 					
-			 				}
-			 					
-	 				}			
-			
-			 				
-	 				
-	 				
-						
-				});
-				
-	            
-	            
-			}
-			
-			
-			 if(typeof(Storage) !== "undefined") {
-			        //if (localStorage.verbos) {
-			            var verbos ;
-
-			           
-			            if(localStorage.getItem('verbos')==null){
-							$.ajax({
-				            	  type:     "GET",
-				            	  url:      "http://15.156.24.35:8585/api/",
-				            	  dataType: "jsonp",
-				            	  success: function(data){
-				            		  console.log(data);
-				            		  verbos=data;
-				            		  var dataToStore = JSON.stringify(verbos);
-	 					              localStorage.setItem('verbos', dataToStore);
-	 					             agregaItems();
-							      }
-				            	});
-			            } else{
-			            	agregaItems();
-			            }
-			            
-			            
-			            
-	
-			    } else {
-			        alert("Sorry, your browser does not support web storage...");
-			    }
-			
-			
-					
- 			
-		
-			
-
-		});
-		
-		
-		
-		
-		</script>
 		
     </head>
-    <body>
+    <body >
     
-    	<div id="contenedor">
-    	
+    	<div id="contenedor" class="flex-container">
+    		<div id="izquierdo" class="flex-item">
+    		</div>
+    		<div id="derecho" class="flex-item">
+    		</div>
+    			
     	</div>
-        
-<!--          	<a id="boton_seconvirtioen" class="common push-down" lang="mx" rel="became">se convirtio en</a> -->
-<!--             <a id="boton_became" class="common push-down" lang="us" rel="seconvirtioen" >became</a> -->
 
-<!-- 			<a id="boton_querer" class="common push-down" lang="mx" rel="wanted">querer</a> -->
-<!--             <a id="boton_wanted" class="common push-down" lang="us" rel="querer" >wanted</a> -->
-              
-      
-       
    
     </body>
 </html>
