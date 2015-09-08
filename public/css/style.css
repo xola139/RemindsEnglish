@@ -1,0 +1,57 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+
+
+
+/*Transitions*/
+.pages {
+		height:200px;
+        /*position: absolute;*/
+        top: 0;
+        right: 0;
+        z-index: 4;
+        padding: 0;
+        overflow: auto;
+      }
+      
+      .pages > div {
+        padding: 0 5px;
+        /*padding-top: 150px;*/
+      }
+
+      .pages .header {
+        color: rgb(82, 101, 162);
+        font-size: 24px;
+        font-weight: normal;
+        margin-top: 5px;
+        margin-bottom: 60px;
+        letter-spacing: 1.20000004768372px;
+      }
+
+      .page {
+        transform: translateY(1080px);
+        transition: transform 0 linear;
+        display: none;
+        opacity: 0;
+        font-size: 16px;
+      }
+
+      .page.active {
+        transform: translateY(0px);
+        transition: all 0.3s ease-out;
+        display: block;
+        opacity: 1;
+      }

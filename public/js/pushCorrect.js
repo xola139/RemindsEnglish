@@ -21,7 +21,7 @@ window.addEventListener('load', function(e) {
 
 $(document).ready(function(){
 	
-	$.material.init();
+	
 	
 	function agregaItems(){
 		var localData = JSON.parse(localStorage.getItem('verbos'));
@@ -105,13 +105,13 @@ $(document).ready(function(){
 function backNext(obj){
 
 	//Quitamos el class del div activo
-	$("#page_"+$(obj).attr('value')).removeClass("active")
+	$("#page_"+$(obj).attr('title')).removeClass("active")
 	//Y lo escondemos				
 	$(".page").not(page).removeClass("active").hide();
 	
 	
 	
-	var nPActual=Number($(obj).attr('value'));
+	var nPActual=Number($(obj).attr('title'));
 	var nPage= obj.id==='btnNext' ? nPActual+1 : nPActual-1;
 	
 	
@@ -119,24 +119,24 @@ function backNext(obj){
 	if(nPage==1){
 		$("#btnBack").css('display','none');
 	}else{
-		$("#btnBack").css('display','inline');
+		$("#btnBack").css('display','');
 	}
 	
 	if(nPage==$("div[id^=page_]").length){
 		$("#btnNext").css('display','none');
 	}else{
-		$("#btnNext").css('display','inline');
+		$("#btnNext").css('display','');
 	}
 	
 	
 	
 	window.page = "#page_"+nPage;
     var page = $(window.page);
-    window.location.hash = window.page;
+   // window.location.hash = window.page;
 		        
-    $(obj).addClass("actve");
-    $("#btnNext").attr('value',nPage);
-    $("#btnBack").attr('value',nPage);
+    $(obj).addClass("active");
+    $("#btnNext").attr('title',nPage);
+    $("#btnBack").attr('title',nPage);
 
     page.show();
 
@@ -188,7 +188,7 @@ function backNext(obj){
   $(window).on("resize", function() {
     $("html, body").height($(window).height());
     //$(".main, .menu").height($(window).height() - $(".header-panel").outerHeight());
-    $(".pages").height($(window).height());
+   // $(".pages").height($(window).height());
     //console.log("resize");
   }).trigger("resize");
 
