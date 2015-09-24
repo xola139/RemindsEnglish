@@ -1,5 +1,5 @@
 var pushFirst=null;
-
+var contadorPage=1;
 //Check if a new cache is available on page load.
 window.addEventListener('load', function(e) {
 
@@ -25,9 +25,8 @@ $(document).ready(function(){
 	
 	function agregaItems(){
 		var localData = JSON.parse(localStorage.getItem('verbos'));
-		var contadorPage=1;
 		var contadorItems=0;
-		
+		 contadorPage=1
 		$.each(localData.items,function (index,data){
 			if(contadorItems==10){
 				contadorPage=contadorPage+1;
@@ -53,9 +52,12 @@ $(document).ready(function(){
 			/*Fin Metodo para revolver los botones*/
           	contadorItems=contadorItems+1;
 		})//Fin $.each
-		
+		$("#npage").text("1/"+contadorPage);
 			
 		$("a[id^=boton]").click(function() {
+			var audio = $("#mySoundClip")[0];
+			audio.play();
+			
 			//Si no tiene la clase correcto no entra al cilco
 	 		if($("#"+this.id).hasClass( "correcto" )==false){
 	 			//se escucha la palabra solo en ingles
@@ -76,11 +78,23 @@ $(document).ready(function(){
 	 				pushFirst=this.id;
 	 			}else{
 	 				if($("#"+pushFirst)[0].rel==this.text.replace(/\s/g,"")){
+	 					
+	 					var audio = $("#soundCorrect")[0];
+	 					audio.play();
+	 					$("#aciertos").text(Number($("#aciertos").text())+1);
 	 					//si ya es correcto le agregamos la clase correcto
 	 					$("#"+this.id).addClass('correcto');
 	 					$("#"+pushFirst).addClass('correcto');
 	 					pushFirst=null;
 			 		}else{
+			 			
+			 			//por si vuelve a pulsar el boton pero es incorrecto
+			 			if(pushFirst!=this.id){
+			 				$("#fallos").text(Number($("#fallos").text())+1);
+			 				var audio = $("#soundInCorrect")[0];
+		 					audio.play();
+			 			}
+			 			
 			 			$("#"+this.id).removeClass('push-down-active').addClass('push-down');;
 			 			$("#"+pushFirst).removeClass('push-down-active').addClass('push-down');
 			 			pushFirst=null;
@@ -114,6 +128,7 @@ function backNext(obj){
 	var nPActual=Number($(obj).attr('title'));
 	var nPage= obj.id==='btnNext' ? nPActual+1 : nPActual-1;
 	
+	$("#npage").text(nPage+"/"+contadorPage);
 	
 	//Mostramos/Ocultamos  el boton Adelante/Atras
 	if(nPage==1){
