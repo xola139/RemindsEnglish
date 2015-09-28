@@ -160,7 +160,7 @@ function backNext(obj){
 			            if(localStorage.getItem('verbos')==null){
 							$.ajax({
 				            	  type:     "GET",
-				            	  url:      "http://15.156.24.35:8585/api/",
+				            	  url:      "http://192.168.1.85:8585/api/",
 				            	  dataType: "jsonp",
 				            	  success: function(data){
 				            		  console.log(data);

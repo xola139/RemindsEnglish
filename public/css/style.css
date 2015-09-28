@@ -18,13 +18,14 @@
 
 /*Transitions*/
 .pages {
-		height:200px;
+		
         /*position: absolute;*/
         top: 0;
         right: 0;
         z-index: 4;
-        padding: 0;
+        padding: 10px;
         overflow: auto;
+        margin: 20px;
       }
       
       .pages > div {

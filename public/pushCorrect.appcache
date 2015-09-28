@@ -1,13 +1,14 @@
 CACHE MANIFEST
-/pushCorrect.html
+#/pushCorrect.html
 
-https://fonts.googleapis.com/icon?family=Material+Icons
-/css/materialize.css
-/css/style.css
-/css/pushCorrect.css
+#https://fonts.googleapis.com/icon?family=Material+Icons
+#/css/materialize.css
+#/css/style.css
+#/css/pushCorrect.css
   
 
-https://code.jquery.com/jquery-2.1.1.min.js
-/js/materialize.js
-/js/init.js
-/js/pushCorrect.js
+	
+#https://code.jquery.com/jquery-2.1.1.min.js
+#/js/materialize.js
+#/js/init.js
+#/js/pushCorrect.js
