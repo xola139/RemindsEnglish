@@ -15,45 +15,48 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-   <link href="css/pushCorrect.css" rel="stylesheet" />
+  <link href="css/pushCorrect.css" rel="stylesheet" />
   
     <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+  <script src="js/inserta.menu"></script>
   <script src="js/pushCorrect.js"></script>
   
+  <script>
+  	$(window).load(function() {	
+		$('.button-collapse').sideNav();
+	});
+  </script>
   
 </head>
 <body>
 <audio id="mySoundClip">
 	<source src="sound/beep.mp3"></source>
 	<source src="sound/beep.ogg"></source>
-	Your browser isn't invited for super fun audio time.
 </audio>
 <audio id="soundCorrect">
 	<source src="sound/acierto.wav"></source>
-	Your browser isn't invited for super fun audio time.
 </audio>
 <audio id="soundInCorrect">
 	<source src="sound/error.wav"></source>
-	Your browser isn't invited for super fun audio time.
 </audio>
 
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
+<div id="header">
+      <!-- menu inserted by jQuery from header.html -->
+</div>
     
-  <a id="btnBack"  title="1" style="display:none" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_previous</i></a>
-  <a id="btnNext" title="1" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_next</i></a>
- <a id="npage"    class="btn disabled">Pagina 1/10</a>
- <a  class="btn disabled">Aciertos:<label  id="aciertos">0</label> </a>
- <a  class="btn disabled">Fallos: <label  id="fallos">0</label></a>
- 
-    </div>
-  </nav>
   <div class="section " id="index-banner">
     <div class="container ">
        <div class="row">
+       	<div class="nav-wrapper container">
+    	  <a id="btnBack"  title="1" style="display:none" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_previous</i></a>
+		  <a id="btnNext" title="1" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_next</i></a>
+		  <a id="npage"    class="btn disabled">Pagina 1/10</a>
+		  <a  class="btn disabled">Aciertos:<label  id="aciertos">0</label> </a>
+		  <a  class="btn disabled">Fallos: <label  id="fallos">0</label></a>
+		</div>
+       
        	Relaciona el verbo infinitivo con su pasado(Match the infinitive verb with its past)
        </div>
       <div class="row center card-panel">
@@ -65,23 +68,12 @@
                     </div>
                  </div>
              </div>
-        
-        
-         
-      </div>	
+       </div>	
      
       <br><br>
 
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-  </body>
+</body>
 </html>
