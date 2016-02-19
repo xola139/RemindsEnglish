@@ -14,7 +14,9 @@
 }
 
 
-
+.contenedorVerbos{
+	padding-bottom: 25px;
+}
 
 /*Transitions*/
 .pages {
@@ -25,12 +27,13 @@
         z-index: 4;
         padding: 0;
         overflow: auto;
+        margin-bottom: 20px;
       }
       
-      .pages > div {
-        padding: 0 5px;
-        /*padding-top: 150px;*/
-      }
+/*       .pages > div { */
+/*         padding: 10px 5px; */
+/*         padding-top: 150px; */
+/*       } */
 
       .pages .header {
         color: rgb(82, 101, 162);

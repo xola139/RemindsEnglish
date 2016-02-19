@@ -1,12 +1,29 @@
 CACHE MANIFEST
-/pushCorrect.html
 
-https://fonts.googleapis.com/icon?family=Material+Icons
+/sound/beep.mp3
+/sound/acierto.wav
+/sound/error.wav
+/sound/beep.ogg
+
+/img/logoShark.png
+
+/font/roboto/Roboto-Regular.woff2
+/font/roboto/Roboto-Regular.woff
+/font/roboto/Roboto-Regular.ttf 
+
+
 /css/materialize.css
 /css/style.css
 /css/pushCorrect.css
-  
-https://code.jquery.com/jquery-2.1.1.min.js
+/css/jquery-ui.css
+
+/js/jquery-1.10.2.js 
+/js/jquery-ui.js
+/js/jquery.ui.touch-punch.min.js
 /js/materialize.js
 /js/init.js
+/js/inserta.menu.js
 /js/pushCorrect.js
+
+/pushCorrect.html
+/header.html

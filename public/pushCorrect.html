@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
-<!-- manifest="pushCorrect.appcache" -->
+<!-- <html lang="en"">
+ manifest="pushCorrect.appcache -->
 <head>
 		<meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -12,25 +13,21 @@
         <meta name="author" content="Raul Corona Xolaltenco" />
         			
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/pushCorrect.css" rel="stylesheet" />
-  
-    <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/inserta.menu"></script>
-  <script src="js/pushCorrect.js"></script>
-  
-  <script>
-  	$(window).load(function() {	
-		$('.button-collapse').sideNav();
-	});
-  </script>
-  
+ <link rel="stylesheet" type="text/css" href="css/stilos.css">
+ <link rel="stylesheet" type="text/css" href="css/offline-language-spanish.css">
+
+
 </head>
 <body>
+
+
+
+
 <audio id="mySoundClip">
 	<source src="sound/beep.mp3"></source>
 	<source src="sound/beep.ogg"></source>
@@ -50,20 +47,28 @@
     <div class="container ">
        <div class="row">
        	<div class="nav-wrapper container">
-    	  <a id="btnBack"  title="1" style="display:none" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_previous</i></a>
-		  <a id="btnNext" title="1" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">skip_next</i></a>
+    	  
 		  <a id="npage"    class="btn disabled">Pagina 1/10</a>
 		  <a  class="btn disabled">Aciertos:<label  id="aciertos">0</label> </a>
 		  <a  class="btn disabled">Fallos: <label  id="fallos">0</label></a>
 		</div>
+			<div class="nav-wrapper container">
+    	  <a id="btnBack"  title="1" style="display:none" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">&lt;</i></a>
+		  <a id="btnNext" title="1" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">&gt;</i></a>
+		  
+		</div>
        
        	Relaciona el verbo infinitivo con su pasado(Match the infinitive verb with its past)
        </div>
+    
+    	
       <div class="row center card-panel">
-       
-        
-        	<div class="pages" >
-                  <div class="" id="contenedor">
+      
+       		<div class="pages" >
+                  <div class="contenedorVerbos" id="contenedor">
+                  	<div id="droppable" class="ui-widget-header" style="width: 200px;height: 50px;">
+						<p><span id="numdesco">1</span>..No me la... sabritas!</p>
+					</div>
                     <div class="well page active" id="page_1">
                     </div>
                  </div>
@@ -74,6 +79,14 @@
 
     </div>
   </div>
+
+  <!--  Scripts-->
+  <script src="js/jquery-2.1.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/jquery.ui.touch-punch.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/inserta.menu.js"></script>
+  <script src="js/pushCorrect.js"></script>
 
 </body>
 </html>

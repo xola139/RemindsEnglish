@@ -1,6 +1,6 @@
 var pushFirst=null;
 var contadorPage=1;
-//Check if a new cache is available on page load.
+//Funcio para validar cambio en el appcache
 window.addEventListener('load', function(e) {
 
 	window.applicationCache.addEventListener('updateready', function(e) {
@@ -19,59 +19,119 @@ window.addEventListener('load', function(e) {
 }, false);
 
 
+
 $(document).ready(function(){
 	
+	$("#numdesco").on("click",function(){
+		agregaItems('desconocidos');
+	});
 	
 	
-	function agregaItems(){
-		var localData = JSON.parse(localStorage.getItem('verbos'));
+	function agregaItems(tipo){
+		var localData = JSON.parse(localStorage.getItem(tipo));
 		var contadorItems=0;
-		 contadorPage=1
-		$.each(localData.items,function (index,data){
+		contadorPage=1
+		console.log(localData.items);
+		var elementos= typeof localData.items === 'undefined' ? localData : localData.items;
+		
+		$("[id^='page_']").remove();
+		$("#contenedor").apped("<div class=\"well page active\" id=\"page_1\"></div>");
+		
+		$.each(elementos,function (index,data){
+			//Po cada 10 verbos colocamos una nueva pagina
 			if(contadorItems==10){
 				contadorPage=contadorPage+1;
 				contadorItems=0;
 				$("#contenedor").append("<div class=\"well page\" id=\"page_"+contadorPage+"\"></div>");
 			}
 			
+			var dataEsp=data.espanol.replace(/\s/g,"");
+			var dataIng=data.ingles.replace(/\s/g,"");
 			
+			var boton1=$("<a id=\"boton_"+dataEsp+"\" style=\" text-decoration:none;\" class=\"common push-down\" lang=\"mx\" rel=\""+dataIng+"\">"+data.espanol+"</a>");
+			var boton2=$("<a id=\"boton_"+dataIng+"\" style=\" text-decoration:none;\" class=\"common push-down\" lang=\"us\" rel=\""+dataEsp+"\">"+data.ingles+"</a>");
+			
+			//Variable para ubicar la pagina donde se dibujaran los botones
+			var contentPage=$("#page_"+ contadorPage);
+		 
 			/*Metodo para revolver los botones*/
-			var boton1="<a id=\"boton_"+data.espanol.replace(/\s/g,"")+"\" style=\" text-decoration:none;\" class=\"common push-down\" lang=\"mx\" rel=\""+data.ingles.replace(/\s/g,"")+"\">"+data.espanol+"</a>";
-			var boton2="<a id=\"boton_"+data.ingles.replace(/\s/g,"")+"\" style=\" text-decoration:none;\" class=\"common push-down\" lang=\"us\" rel=\""+data.espanol.replace(/\s/g,"")+"\">"+data.ingles+"</a>";
-		
-			if(Math.floor(Math.random() * 50)&1)
-				$("#page_"+contadorPage).append(boton1);
-			else
-				$("#page_"+contadorPage).prepend(boton1);
-			
-			if(Math.floor(Math.random() * 6)&1)
-				$("#page_"+contadorPage).append(boton2);
-			else
-				$("#page_"+contadorPage).prepend(boton2);
+			/*Agregamos al contenedor y lo volcemos drang and drop*/
+			if(Math.floor(Math.random() * 50)&1){
+				contentPage.append( boton1 );
+				boton1.draggable({ revert: true });
+			}else{
+				contentPage.prepend(boton1);
+				boton1.draggable({ revert: true });
+			}
+				
+			if(Math.floor(Math.random() * 6)&1){
+				contentPage.append(boton2);
+				boton2.draggable({ revert: true });
+			}else{ 
+				contentPage.prepend(boton2 );
+				boton2.draggable({ revert: true });
+			}
 			
 			/*Fin Metodo para revolver los botones*/
           	contadorItems=contadorItems+1;
 		})//Fin $.each
+		
+		//Atrapar los verbos no me la sabritas
+		$("#droppable").droppable({
+			drop: function( event, ui ) {
+				var arrayDesconocido=[];
+			    var dataDesconocidos;
+			    
+			    if(localStorage.getItem('desconocidos')==null){
+			    	arrayDesconocido.push({ingles:event.toElement.id.replace("boton_",""),espanol:event.toElement.rel.replace("boton_","")});
+			    	dataDesconocidos = JSON.stringify(arrayDesconocido);
+				    localStorage.setItem('desconocidos', dataDesconocidos);
+			    }else{
+			    	arrayDesconocido = JSON.parse(localStorage.getItem('desconocidos'));
+			        arrayDesconocido.push({ingles:event.toElement.id.replace("boton_",""),espanol:event.toElement.rel.replace("boton_","")});
+			        dataDesconocidos = JSON.stringify(arrayDesconocido);
+			        localStorage.setItem('desconocidos', dataDesconocidos);
+			    }
+			    
+			    $("#numdesco").text(arrayDesconocido.length);
+			    
+			    $("#"+event.toElement.id).remove();
+			    $("#boton_"+event.toElement.rel).remove();
+			    
+			    $( this )
+			          .addClass( "ui-state-highlight" )
+			          .find( "p" );
+			          
+			          //.html( "Dropped!" );
+			      }
+			    });
+		
+		
 		$("#npage").text("1/"+contadorPage);
 			
 		$("a[id^=boton]").click(function() {
 			var audio = $("#mySoundClip")[0];
 			audio.play();
 			
+			var elementoSelec=$("#"+this.id);
+			
 			//Si no tiene la clase correcto no entra al cilco
-	 		if($("#"+this.id).hasClass( "correcto" )==false){
+	 		if(elementoSelec.hasClass( "correcto" )==false){
 	 			//se escucha la palabra solo en ingles
 	 			if(this.lang=='us'){
+	 				
 	 				var msg = new SpeechSynthesisUtterance(this.text);
+	 					msg.lang = 'en-US';
+	 					msg.rate = 1.2;
 	 				    window.speechSynthesis.speak(msg);
 	 			}
 	 			
-	 			if($("#"+this.id).hasClass( "push-down-active" )==true){
-	 				$("#"+this.id).removeClass('push-down-active');
-	 				$("#"+this.id).addClass('push-down');
+	 			if(elementoSelec.hasClass( "push-down-active" )==true){
+	 				elementoSelec.removeClass('push-down-active');
+	 				elementoSelec.addClass('push-down');
 	 			}else{
-	 				$("#"+this.id).addClass('push-down-active');
-	 				$("#"+this.id).removeClass('push-down');
+	 				elementoSelec.addClass('push-down-active');
+	 				elementoSelec.removeClass('push-down');
 	 			}
 			 				
 	 			if(pushFirst==null){
@@ -83,7 +143,7 @@ $(document).ready(function(){
 	 					audio.play();
 	 					$("#aciertos").text(Number($("#aciertos").text())+1);
 	 					//si ya es correcto le agregamos la clase correcto
-	 					$("#"+this.id).addClass('correcto');
+	 					elementoSelec.addClass('correcto');
 	 					$("#"+pushFirst).addClass('correcto');
 	 					pushFirst=null;
 			 		}else{
@@ -95,7 +155,7 @@ $(document).ready(function(){
 		 					audio.play();
 			 			}
 			 			
-			 			$("#"+this.id).removeClass('push-down-active').addClass('push-down');;
+			 			elementoSelec.removeClass('push-down-active').addClass('push-down');;
 			 			$("#"+pushFirst).removeClass('push-down-active').addClass('push-down');
 			 			pushFirst=null;
 			 		}
@@ -118,6 +178,9 @@ $(document).ready(function(){
 
 function backNext(obj){
 
+		var btnBack=$("#btnBack");
+		var btnNext=$("#btnNext");
+	
 	//Quitamos el class del div activo
 	$("#page_"+$(obj).attr('title')).removeClass("active")
 	//Y lo escondemos				
@@ -132,15 +195,15 @@ function backNext(obj){
 	
 	//Mostramos/Ocultamos  el boton Adelante/Atras
 	if(nPage==1){
-		$("#btnBack").css('display','none');
+		btnBack.css('display','none');
 	}else{
-		$("#btnBack").css('display','');
+		btnBack.css('display','');
 	}
 	
 	if(nPage==$("div[id^=page_]").length){
-		$("#btnNext").css('display','none');
+		btnNext.css('display','none');
 	}else{
-		$("#btnNext").css('display','');
+		btnNext.css('display','');
 	}
 	
 	
@@ -150,8 +213,8 @@ function backNext(obj){
    // window.location.hash = window.page;
 		        
     $(obj).addClass("active");
-    $("#btnNext").attr('title',nPage);
-    $("#btnBack").attr('title',nPage);
+    btnNext.attr('title',nPage);
+    btnBack.attr('title',nPage);
 
     page.show();
 
@@ -167,8 +230,6 @@ function backNext(obj){
     }, 100);
 }
 
-
-
 			 if(typeof(Storage) !== "undefined") {
 			        //if (localStorage.verbos) {
 			            var verbos ;
@@ -182,17 +243,21 @@ function backNext(obj){
 				            		  verbos=data;
 				            		  var dataToStore = JSON.stringify(verbos);
 	 					              localStorage.setItem('verbos', dataToStore);
-	 					              agregaItems();
+	 					              agregaItems('verbos');
 							      }
 				            	});
 			            } else{
-			            	agregaItems();
+			            	agregaItems('verbos');
 			            }
 			 } else {
 			        alert("Sorry, your browser does not support web storage...");
 			 }
 
 		});
+
+
+
+
 
 
 
@@ -207,6 +272,8 @@ function backNext(obj){
     //console.log("resize");
   }).trigger("resize");
 
+  
+  
   
 
  
