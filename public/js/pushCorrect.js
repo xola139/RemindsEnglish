@@ -35,21 +35,22 @@ $(document).ready(function(){
 		var elementos= typeof localData.items === 'undefined' ? localData : localData.items;
 		
 		$("[id^='page_']").remove();
-		$("#contenedor").apped("<div class=\"well page active\" id=\"page_1\"></div>");
+		$("#contenedor").append("<div class=\"flex-container well page active\" style=\"display: flex;\" id=\"page_1\"></div>");
 		
 		$.each(elementos,function (index,data){
-			//Po cada 10 verbos colocamos una nueva pagina
+			//Por cada 10 verbos colocamos una nueva pagina
 			if(contadorItems==10){
 				contadorPage=contadorPage+1;
 				contadorItems=0;
-				$("#contenedor").append("<div class=\"well page\" id=\"page_"+contadorPage+"\"></div>");
+				$("#contenedor").append("<div class=\"flex-container well page\" id=\"page_"+contadorPage+"\"></div>");
 			}
+			
 			
 			var dataEsp=data.espanol.replace(/\s/g,"");
 			var dataIng=data.ingles.replace(/\s/g,"");
 			
-			var boton1=$("<a id=\"boton_"+dataEsp+"\" style=\" text-decoration:none;\" class=\"common push-down\" lang=\"mx\" rel=\""+dataIng+"\">"+data.espanol+"</a>");
-			var boton2=$("<a id=\"boton_"+dataIng+"\" style=\" text-decoration:none;\" class=\"common push-down\" lang=\"us\" rel=\""+dataEsp+"\">"+data.ingles+"</a>");
+			var boton1=$("<div class=\"flex-item\"><i class=\"material-icons tiny\">swap_vertical_circle</i><a id=\"boton_"+dataEsp+"\"  class=\"common push-down\" lang=\"mx\" rel=\""+dataIng+"\">"+data.espanol+"</a></div>");
+			var boton2=$("<div class=\"flex-item\"><i class=\"material-icons tiny\">swap_vertical_circle</i><a id=\"boton_"+dataIng+"\"  class=\"common push-down\" lang=\"us\" rel=\""+dataEsp+"\">"+data.ingles+"</a></div>");
 			
 			//Variable para ubicar la pagina donde se dibujaran los botones
 			var contentPage=$("#page_"+ contadorPage);
@@ -58,45 +59,51 @@ $(document).ready(function(){
 			/*Agregamos al contenedor y lo volcemos drang and drop*/
 			if(Math.floor(Math.random() * 50)&1){
 				contentPage.append( boton1 );
-				boton1.draggable({ revert: true });
+				boton1.draggable({ revert: true,handle: "i" });
 			}else{
 				contentPage.prepend(boton1);
-				boton1.draggable({ revert: true });
+				boton1.draggable({ revert: true,handle: "i" });
 			}
 				
 			if(Math.floor(Math.random() * 6)&1){
 				contentPage.append(boton2);
-				boton2.draggable({ revert: true });
+				boton2.draggable({ revert: true,handle: "i" });
 			}else{ 
 				contentPage.prepend(boton2 );
-				boton2.draggable({ revert: true });
+				boton2.draggable({ revert: true,handle: "i" });
 			}
 			
 			/*Fin Metodo para revolver los botones*/
           	contadorItems=contadorItems+1;
 		})//Fin $.each
 		
+		
+		
+		
 		//Atrapar los verbos no me la sabritas
 		$("#droppable").droppable({
 			drop: function( event, ui ) {
+				
+				
 				var arrayDesconocido=[];
 			    var dataDesconocidos;
+			    var elemento=ui.draggable.children('a')[0];
 			    
 			    if(localStorage.getItem('desconocidos')==null){
-			    	arrayDesconocido.push({ingles:event.toElement.id.replace("boton_",""),espanol:event.toElement.rel.replace("boton_","")});
+			    	arrayDesconocido.push({ingles:elemento.id.replace("boton_",""),espanol:elemento.rel.replace("boton_","")});
 			    	dataDesconocidos = JSON.stringify(arrayDesconocido);
 				    localStorage.setItem('desconocidos', dataDesconocidos);
 			    }else{
 			    	arrayDesconocido = JSON.parse(localStorage.getItem('desconocidos'));
-			        arrayDesconocido.push({ingles:event.toElement.id.replace("boton_",""),espanol:event.toElement.rel.replace("boton_","")});
+			        arrayDesconocido.push({ingles:elemento.id.replace("boton_",""),espanol:elemento.rel.replace("boton_","")});
 			        dataDesconocidos = JSON.stringify(arrayDesconocido);
 			        localStorage.setItem('desconocidos', dataDesconocidos);
 			    }
 			    
 			    $("#numdesco").text(arrayDesconocido.length);
 			    
-			    $("#"+event.toElement.id).remove();
-			    $("#boton_"+event.toElement.rel).remove();
+			    $("#"+elemento.id).parent().remove();
+			    $("#boton_"+elemento.rel).parent().remove();
 			    
 			    $( this )
 			          .addClass( "ui-state-highlight" )
@@ -163,7 +170,8 @@ $(document).ready(function(){
 			 					
 	 		}			
 		});//fin $("a[id^=boton]")
-				
+		
+		
 	 }
 			
 			

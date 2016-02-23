@@ -19,13 +19,14 @@
 /* Common Properties */
 .common
 {
-    margin: 5px;
-    padding: 10px 15px;
+        margin-bottom: 15px;
+    padding: 2px 7px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    font-size: 16px;
+    font-size: 12px;
     text-align: center;
+    text-decoration:none;
     position: relative;
     display: inline-table;
     cursor: pointer;
@@ -91,36 +92,19 @@
 
 }
 
-
-
 .flex-container {
-  /* We first create a flex layout context */
-  display: flex;
-  
-  /* Then we define the flow direction and if we allow the items to wrap 
-   * Remember this is the same as:
-   * flex-direction: row;
-   * flex-wrap: wrap;
-   */
-  flex-flow: row wrap;
-  
-  /* Then we define how is distributed the remaining space */
-  /*justify-content: space-around;*/
-  justify-content: center;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    align-content: center;
+    width: 100%;
+    
 }
 
 .flex-item {
-  background: tomato;
-  padding: 5px;
-  width: 150px;
-  /*height: 150px;*/
-  /*margin-top: 10px;*/
-  
- /* line-height: 150px;*/
-  color: white;
-  font-weight: bold;
-  font-size: 3em;
-  text-align: center;
+	loat: left;
+	margin: 0;
+    
 }
-
-
