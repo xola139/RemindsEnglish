@@ -1,31 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en"  manifest="pushCorrect.appcache">
 
 <!-- <html lang="en"">
  manifest="pushCorrect.appcache -->
 <head>
-		<meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-        <title>Push the correct</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/> 
-        <meta name="description" content="App que ayuda a recordar verbos en ingles" />
-        <meta name="keywords" content="english, practice" />
-        <meta name="author" content="Raul Corona Xolaltenco" />
+	<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <title>Push the correct</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/> 
+    <meta name="description" content="App que ayuda a recordar verbos en ingles" />
+    <meta name="keywords" content="english, practice" />
+    <meta name="author" content="Raul Corona Xolaltenco" />
         			
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/pushCorrect.css" rel="stylesheet" />
- <link rel="stylesheet" type="text/css" href="css/stilos.css">
- <link rel="stylesheet" type="text/css" href="css/offline-language-spanish.css">
-
-
+  	<!-- CSS  -->
+  	<link href="css/icon.css?family=Material+Icons" rel="stylesheet">
+  	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  	<link href="css/jquery-ui.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  	<link rel="stylesheet" type="text/css" href="css/pushCorrect.css"  />
+ 	<link rel="stylesheet" type="text/css" href="css/stilos.css">
+ 	<link rel="stylesheet" type="text/css" href="css/offline-language-spanish.css">
 </head>
+
 <body>
-
-
 
 
 <audio id="mySoundClip">
@@ -51,29 +48,34 @@
 		  <a id="npage"    class="btn disabled">Pagina 1/10</a>
 		  <a  class="btn disabled">Aciertos:<label  id="aciertos">0</label> </a>
 		  <a  class="btn disabled">Fallos: <label  id="fallos">0</label></a>
-		</div>
-			<div class="nav-wrapper container">
-    	  <a id="btnBack"  title="1" style="display:none" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">&lt;</i></a>
-		  <a id="btnNext" title="1" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">&gt;</i></a>
 		  
+		  <i id="resetear" class="material-icons">loop</i>
 		</div>
-       
-       	Relaciona el verbo infinitivo con su pasado(Match the infinitive verb with its past)
+		Relaciona el verbo infinitivo con su pasado(Match the infinitive verb with its past)
        </div>
     
-    	
-    
-    	
-      <div class="row center">
-      	<div class="pages" >
-                  <div id="contenedor" class="contenedorVerbos" >
-                  	<div id="droppable" class="ui-widget-header" style="width: 200px;height: 50px;">
-						<p><span id="numdesco">1</span>..No me la... sabritas!</p>
-					</div><br/>
-                    
-                 </div>
-             </div>
-       </div>	
+    <div class="row center">
+    	<div class="pages" >
+    		<div id="contenedor" class="contenedorVerbos" >
+    			<table>
+    				<tr>
+                 		<td>
+                 			<a id="btnBack"  title="1" style="display:none" class="btn-floating"><i class="material-icons">skip_previous</i></a>
+                 		</td>
+                 		<td>
+                 			<div id="droppable" class="ui-widget-header" style="width: 200px;height: 60px;">
+								<p><span id="numdesco">....</span>No me la<img src="img/sabritas.png" height="40" width="40"></p>
+							</div>
+                 		</td>
+                 		<td>
+                 			<a id="btnNext" title="1" class="btn-floating"><i class="material-icons">skip_next</i></a>
+                 		</td>
+                 	</tr>
+                 </table>
+            </div>
+		</div>
+		
+	</div>	
        
        
      

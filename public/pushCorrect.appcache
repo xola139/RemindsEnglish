@@ -5,23 +5,27 @@ CACHE MANIFEST
 /sound/error.wav
 /sound/beep.ogg
 
+/favicon.ico
 /img/logoShark.png
+/img/sabritas.png
 
 /font/roboto/Roboto-Regular.woff2
 /font/roboto/Roboto-Regular.woff
 /font/roboto/Roboto-Regular.ttf 
+/fonts/2fcrYFNaTjcS6g4U3t-Y5RV6cRhDpPC5P4GCEJpqGoc.woff
 
-
+/css/icon.css?family=Material+Icons
 /css/materialize.css
 /css/style.css
-/css/pushCorrect.css
 /css/jquery-ui.css
+/css/pushCorrect.css
+/css/stilos.css
+/css/offline-language-spanish.css
 
-/js/jquery-1.10.2.js 
+/js/jquery-2.1.1.min.js
 /js/jquery-ui.js
 /js/jquery.ui.touch-punch.min.js
 /js/materialize.js
-/js/init.js
 /js/inserta.menu.js
 /js/pushCorrect.js
 

@@ -1,3 +1,11 @@
+.ui-state-hover-pushCorrect {
+	border: 1px solid #999999;
+	font-weight: normal;
+	color: #212121;
+	border-style: dashed;
+}
+
+
 .contents
 {
     width: 800px;
@@ -106,5 +114,6 @@
 .flex-item {
 	loat: left;
 	margin: 0;
+	margin-right: 15px;
     
 }

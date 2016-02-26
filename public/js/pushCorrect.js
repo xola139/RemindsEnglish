@@ -22,6 +22,23 @@ window.addEventListener('load', function(e) {
 
 $(document).ready(function(){
 	
+	
+	$("#resetear").on("click",function(){
+		
+		localStorage.removeItem("verbos");
+	});
+	
+	
+	//Colocamos el # de vercos que no conoces perdedor
+	
+
+	if(localStorage.getItem('desconocidos')!=null){
+		var arraylength = [] ;
+		arraylength = JSON.parse(localStorage.getItem('desconocidos'));
+		$("#numdesco").text(arraylength.length +"..");
+	}
+	
+	
 	$("#numdesco").on("click",function(){
 		agregaItems('desconocidos');
 	});
@@ -31,7 +48,7 @@ $(document).ready(function(){
 		var localData = JSON.parse(localStorage.getItem(tipo));
 		var contadorItems=0;
 		contadorPage=1
-		console.log(localData.items);
+		//console.log(localData.items);
 		var elementos= typeof localData.items === 'undefined' ? localData : localData.items;
 		
 		$("[id^='page_']").remove();
@@ -49,8 +66,8 @@ $(document).ready(function(){
 			var dataEsp=data.espanol.replace(/\s/g,"");
 			var dataIng=data.ingles.replace(/\s/g,"");
 			
-			var boton1=$("<div class=\"flex-item\"><i class=\"material-icons tiny\">swap_vertical_circle</i><a id=\"boton_"+dataEsp+"\"  class=\"common push-down\" lang=\"mx\" rel=\""+dataIng+"\">"+data.espanol+"</a></div>");
-			var boton2=$("<div class=\"flex-item\"><i class=\"material-icons tiny\">swap_vertical_circle</i><a id=\"boton_"+dataIng+"\"  class=\"common push-down\" lang=\"us\" rel=\""+dataEsp+"\">"+data.ingles+"</a></div>");
+			var boton1=$("<div class=\"flex-item\"><i style=\"cursor:move;\" class=\"material-icons tiny\">swap_vertical_circle</i><a id=\"boton_"+dataEsp+"\"  class=\"common push-down\" lang=\"mx\" rel=\""+dataIng+"\">"+data.espanol+"</a></div>");
+			var boton2=$("<div class=\"flex-item\"><i style=\"cursor:move;\" class=\"material-icons tiny\">swap_vertical_circle</i><a id=\"boton_"+dataIng+"\"  class=\"common push-down\" lang=\"us\" rel=\""+dataEsp+"\">"+data.ingles+"</a></div>");
 			
 			//Variable para ubicar la pagina donde se dibujaran los botones
 			var contentPage=$("#page_"+ contadorPage);
@@ -82,6 +99,8 @@ $(document).ready(function(){
 		
 		//Atrapar los verbos no me la sabritas
 		$("#droppable").droppable({
+			activeClass: "ui-state-hover-pushCorrect",
+		    hoverClass: "ui-state-active",
 			drop: function( event, ui ) {
 				
 				
@@ -100,7 +119,7 @@ $(document).ready(function(){
 			        localStorage.setItem('desconocidos', dataDesconocidos);
 			    }
 			    
-			    $("#numdesco").text(arrayDesconocido.length);
+			    $("#numdesco").text(arrayDesconocido.length +"..");
 			    
 			    $("#"+elemento.id).parent().remove();
 			    $("#boton_"+elemento.rel).parent().remove();
@@ -247,7 +266,7 @@ function backNext(obj){
 				            	  url:      "http://15.156.24.35:8585/api/",
 				            	  dataType: "jsonp",
 				            	  success: function(data){
-				            		  console.log(data);
+				            		  //console.log(data);
 				            		  verbos=data;
 				            		  var dataToStore = JSON.stringify(verbos);
 	 					              localStorage.setItem('verbos', dataToStore);
