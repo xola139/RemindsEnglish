@@ -45,21 +45,46 @@ $(document).ready(function(){
 	
 	
 	function agregaItems(tipo){
+		var theContenedor=$("#contenedor");
 		var localData = JSON.parse(localStorage.getItem(tipo));
 		var contadorItems=0;
 		contadorPage=1
 		//console.log(localData.items);
 		var elementos= typeof localData.items === 'undefined' ? localData : localData.items;
+		var auxVerbos;
+		var auxExiste=false;
+		
+		if(tipo=='verbos' ){
+			auxVerbos = JSON.parse(localStorage.getItem("desconocidos"));
+		}
 		
 		$("[id^='page_']").remove();
-		$("#contenedor").append("<div class=\"flex-container well page active\" style=\"display: flex;\" id=\"page_1\"></div>");
+		theContenedor.append("<div class=\"flex-container well page active\" style=\"display: flex;\" id=\"page_1\"></div>");
 		
 		$.each(elementos,function (index,data){
+			
+			auxExiste=false;
+			
+			//Para validar que no exista en la lista de no me la se
+			if(tipo=='verbos' &&  auxVerbos !=null){
+				for (var x=0;x<auxVerbos.length;x++)
+				{
+				  if(auxVerbos[x].ingles==data.ingles){
+					  auxExiste=true;
+					  return;
+				  }
+				}
+			}
+			
+			if(auxExiste==true){
+				return;
+			}
+			
 			//Por cada 10 verbos colocamos una nueva pagina
 			if(contadorItems==10){
 				contadorPage=contadorPage+1;
 				contadorItems=0;
-				$("#contenedor").append("<div class=\"flex-container well page\" id=\"page_"+contadorPage+"\"></div>");
+				theContenedor.append("<div class=\"flex-container well page\" id=\"page_"+contadorPage+"\"></div>");
 			}
 			
 			
@@ -94,7 +119,7 @@ $(document).ready(function(){
           	contadorItems=contadorItems+1;
 		})//Fin $.each
 		
-		
+					
 		
 		
 		//Atrapar los verbos no me la sabritas
@@ -166,11 +191,15 @@ $(document).ready(function(){
 	 				if($("#"+pushFirst)[0].rel==this.text.replace(/\s/g,"")){
 	 					
 	 					var audio = $("#soundCorrect")[0];
+	 					var pushF=$("#"+pushFirst);
 	 					audio.play();
 	 					$("#aciertos").text(Number($("#aciertos").text())+1);
 	 					//si ya es correcto le agregamos la clase correcto
 	 					elementoSelec.addClass('correcto');
-	 					$("#"+pushFirst).addClass('correcto');
+	 					pushF.addClass('correcto');
+	 					
+	 					elementoSelec.parent().find("i").remove();
+	 					pushF.parent().find("i").remove();
 	 					pushFirst=null;
 			 		}else{
 			 			
