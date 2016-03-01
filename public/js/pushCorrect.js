@@ -295,13 +295,15 @@ function backNext(obj){
 				            	  url:      "http://15.156.24.35:8585/api/",
 				            	  dataType: "jsonp",
 				            	  success: function(data){
-				            		  //console.log(data);
 				            		  verbos=data;
 				            		  var dataToStore = JSON.stringify(verbos);
 	 					              localStorage.setItem('verbos', dataToStore);
 	 					              agregaItems('verbos');
 							      }
 				            	});
+			            	
+
+			            	
 			            } else{
 			            	agregaItems('verbos');
 			            }

@@ -9,6 +9,10 @@ CACHE MANIFEST
 /img/logoShark.png
 /img/sabritas.png
 
+
+
+
+
 /font/roboto/Roboto-Regular.woff2
 /font/roboto/Roboto-Regular.woff
 /font/roboto/Roboto-Regular.ttf 
@@ -22,12 +26,14 @@ CACHE MANIFEST
 /css/stilos.css
 /css/offline-language-spanish.css
 
+
 /js/jquery-2.1.1.min.js
 /js/jquery-ui.js
 /js/jquery.ui.touch-punch.min.js
 /js/materialize.js
-/js/inserta.menu.js
+/js/init.js
 /js/pushCorrect.js
+
 
 /pushCorrect.html
 /header.html
