@@ -8,7 +8,7 @@ CACHE MANIFEST
 /favicon.ico
 /img/logoShark.png
 /img/sabritas.png
-
+/img/move.png
 
 
 
@@ -27,7 +27,7 @@ CACHE MANIFEST
 /css/offline-language-spanish.css
 
 
-/js/jquery-2.1.1.min.js
+/js/jquery-2.2.1.min.js
 /js/jquery-ui.js
 /js/jquery.ui.touch-punch.min.js
 /js/materialize.js
@@ -37,3 +37,7 @@ CACHE MANIFEST
 
 /pushCorrect.html
 /header.html
+
+
+
+

@@ -16,6 +16,8 @@
 
 .contenedorVerbos{
 	padding-bottom: 25px;
+	height: 550px;
+    overflow: hidden;
 }
 
 /*Transitions*/

@@ -1,3 +1,13 @@
+
+
+.imgmove{
+position: relative;
+top: 12px;
+height:35px;	
+cursor:move;
+}
+
+
 .ui-state-hover-pushCorrect {
 	border: 1px solid #999999;
 	font-weight: normal;
@@ -115,5 +125,11 @@
 	loat: left;
 	margin: 0;
 	margin-right: 15px;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     
 }
