@@ -24,19 +24,19 @@ $(document).ready(function(){
 	
 	//Para retirar los vervos que no se conocen de la bandeja no reconocidos
 	$("#resetear").on("click",function(){
-		localStorage.removeItem("desconocidos");
+		localStorage.removeItem("desconocidosVerb");
 	});
 	
 	//Colocamos el # de verbos que no conoces perdedor
-	if(localStorage.getItem('desconocidos')!=null){
+	if(localStorage.getItem('desconocidosVerb')!=null){
 		var arraylength = [] ;
-		arraylength = JSON.parse(localStorage.getItem('desconocidos'));
+		arraylength = JSON.parse(localStorage.getItem('desconocidosVeb'));
 		$("#numdesco").text(arraylength.length +"..");
 	}
 	
 	//Colocar el numero de verbos desconocidos para repasar
 	$("#numdesco").on("click",function(){
-		agregaItems('desconocidos');
+		agregaItems('desconocidosVerb');
 	});
 	
 	//botones anvegacion
@@ -51,7 +51,7 @@ $(document).ready(function(){
 	//Validamos si soporta localstorage si no valida estamos fritos
 	if(typeof(Storage) !== "undefined") {
 		var verbos ;
-		if(localStorage.getItem('verbos')==null){
+		if(localStorage.getItem('verbosVerb')==null){
 			$.ajax({
 				type:     "GET",
 				url:      "http://15.156.24.35:8585/api",
@@ -59,20 +59,12 @@ $(document).ready(function(){
 				success: function(data){
 					verbos=data;
 					var dataToStore = JSON.stringify(verbos);
-					localStorage.setItem('verbos', dataToStore);
-					agregaItems('verbos');
+					localStorage.setItem('verbosVerb', dataToStore);
+					agregaItems('verbosVerb');
 				}
 			});
-			
-//			$.get( "http://15.156.24.35:8585/api", function( data ) {
-//					verbos=data;
-//					var dataToStore = JSON.stringify(verbos);
-//					localStorage.setItem('verbos', dataToStore);
-//					agregaItems('verbos');
-//				});
-			
-		} else{
-			agregaItems('verbos');
+		}else{
+			agregaItems('verbosVerb');
 		}
 		return ;
 	}else {
@@ -82,20 +74,6 @@ $(document).ready(function(){
 });
 
 
-function getXmlDoc() {
-	  var xmlDoc;
-
-	  if (window.XMLHttpRequest) {
-	    // code for IE7+, Firefox, Chrome, Opera, Safari
-	    xmlDoc = new XMLHttpRequest();
-	  }
-	  else {
-	    // code for IE6, IE5
-	    xmlDoc = new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-
-	  return xmlDoc;
-	}
 
 
 function backNext(obj){
@@ -157,19 +135,19 @@ function agregaItems(tipo){
 	var auxVerbos;
 	var auxExiste=false;
 	
-	if(tipo == 'verbos' ){
-		auxVerbos = JSON.parse(localStorage.getItem("desconocidos"));
+	if(tipo == 'verbosVerb' ){
+		auxVerbos = JSON.parse(localStorage.getItem("desconocidosVerb"));
 	}
 	
 	$("[id^='page_']").remove();
-	theContenedor.append("<div class=\"flex-container well page active\" style=\"display: flex;\" id=\"page_1\"></div>");
+	theContenedor.append("<div class='flex-container well page active' style='display: flex;' id='page_1'></div>");
 	
 	$.each(elementos,function (index,data){
 		
 		auxExiste = false;
 		
 		//Para validar que no exista en la lista de no me la se
-		if(tipo == 'verbos' &&  auxVerbos != null){
+		if(tipo == 'verbosVerb' &&  auxVerbos != null){
 			for (var x = 0;x < auxVerbos.length;x++)
 			{
 			  if(auxVerbos[x].ingles == data.ingles){
@@ -187,15 +165,16 @@ function agregaItems(tipo){
 		if(contadorItems == 10){
 			contadorPage = contadorPage+1;
 			contadorItems = 0;
-			theContenedor.append("<div class=\"flex-container well page\" id=\"page_"+contadorPage+"\"></div>");
+			theContenedor.append("<div class='flex-container well page' id='page_"+contadorPage+"'></div>");
 		}
 		
 		
 		var dataEsp = data.espanol.replace(/\s/g,"");
 		var dataIng = data.ingles.replace(/\s/g,"");
 		
-		var boton1 = $("<div class=\"flex-item\"><img src='img/move.png' class='imgmove' /><a id=\"boton_"+dataEsp+"\"  class=\"common push-down\" lang=\"mx\" rel=\""+dataIng+"\">"+data.espanol+"</a></div>");
-		var boton2 = $("<div class=\"flex-item\"><img src='img/move.png' class='imgmove' /><a id=\"boton_"+dataIng+"\"  class=\"common push-down\" lang=\"us\" rel=\""+dataEsp+"\">"+data.ingles+"</a></div>");
+		
+		var boton1 = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataEsp+"'  class='waves-effect waves-light btn' lang='mx' rel='"+dataIng+"'>"+data.espanol+"</a></div>");
+		var boton2 = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataIng+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+data.ingles+"</a></div>");
 		
 		//Variable para ubicar la pagina donde se dibujaran los botones
 		var contentPage = $("#page_"+ contadorPage);
@@ -233,15 +212,15 @@ function agregaItems(tipo){
 		    var dataDesconocidos;
 		    var elemento = ui.draggable.children('a')[0];
 		    
-		    if(localStorage.getItem('desconocidos') == null){
+		    if(localStorage.getItem('desconocidosVerb') == null){
 		    	arrayDesconocido.push({ingles:elemento.id.replace("boton_",""),espanol:elemento.rel.replace("boton_","")});
 		    	dataDesconocidos = JSON.stringify(arrayDesconocido);
-			    localStorage.setItem('desconocidos', dataDesconocidos);
+			    localStorage.setItem('desconocidosVerb', dataDesconocidos);
 		    }else{
-		    	arrayDesconocido = JSON.parse(localStorage.getItem('desconocidos'));
+		    	arrayDesconocido = JSON.parse(localStorage.getItem('desconocidosVerb'));
 		        arrayDesconocido.push({ingles:elemento.id.replace("boton_",""),espanol:elemento.rel.replace("boton_","")});
 		        dataDesconocidos = JSON.stringify(arrayDesconocido);
-		        localStorage.setItem('desconocidos', dataDesconocidos);
+		        localStorage.setItem('desconocidosVerb', dataDesconocidos);
 		    }
 		    
 		    $("#numdesco").text(arrayDesconocido.length +"..");
