@@ -142,7 +142,7 @@ function agregaItems(tipo){
 	$("[id^='page_']").remove();
 	theContenedor.append("<div class='flex-container well page active' style='display: flex;' id='page_1'></div>");
 	
-	$.each(elementos,function (index,data){
+	$.each(elementos,function (index,item){
 		
 		auxExiste = false;
 		
@@ -162,44 +162,44 @@ function agregaItems(tipo){
 		}
 		
 		//Por cada 10 verbos colocamos una nueva pagina
-		if(contadorItems == 10){
+		if(contadorItems == 5){
 			contadorPage = contadorPage+1;
 			contadorItems = 0;
 			theContenedor.append("<div class='flex-container well page' id='page_"+contadorPage+"'></div>");
 		}
 		
 		
-		var dataEsp = data.espanol.replace(/\s/g,"");
-		var dataIng = data.ingles.replace(/\s/g,"");
+		var dataEsp = item.traduccion.replace(/\s/g,"");
+		var dataInf = item.infinitivo.replace(/\s/g,"");
+		var dataPas = item.pasado.replace(/\s/g,"");
+		var dataPar = item.participio.replace(/\s/g,"");
 		
 		
-		var boton1 = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataEsp+"'  class='waves-effect waves-light btn' lang='mx' rel='"+dataIng+"'>"+data.espanol+"</a></div>");
-		var boton2 = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataIng+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+data.ingles+"</a></div>");
+		var btnEspanol = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataEsp+"'  class='waves-effect waves-light btn' lang='mx' rel='"+dataInf+"'>"+item.traduccion+"</a></div>");
+		var btnInfinitivo = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataInf+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+item.infinitivo+"</a></div>");
+		var btnPasado = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataPas+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+item.pasado+"</a></div>");
+		var btnParticipio = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataPar+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+item.participio+"</a></div>");
 		
 		//Variable para ubicar la pagina donde se dibujaran los botones
 		var contentPage = $("#page_"+ contadorPage);
 	 
 		/*Metodo para revolver los botones*/
 		/*Agregamos al contenedor y lo volcemos drang and drop*/
-		if(Math.floor(Math.random() * 50)&1){
-			contentPage.append( boton1 );
-			boton1.draggable({ revert: true,handle: "img" });
-		}else{
-			contentPage.prepend(boton1);
-			boton1.draggable({ revert: true,handle: "img" });
-		}
+		Math.floor(Math.random() * 50)&1==true ? contentPage.append( btnEspanol ):contentPage.prepend(btnEspanol);
 			
-		if(Math.floor(Math.random() * 6)&1){
-			contentPage.append(boton2);
-			boton2.draggable({ revert: true,handle: "img" });
-		}else{ 
-			contentPage.prepend(boton2 );
-			boton2.draggable({ revert: true,handle: "img" });
-		}
+		Math.floor(Math.random() * 6)&1 ==true ?contentPage.append(btnInfinitivo): contentPage.prepend(btnInfinitivo); 
+			
+		Math.floor(Math.random() * 50)&1==true ? contentPage.append( btnPasado ):contentPage.prepend(btnPasado);
+		
+		Math.floor(Math.random() * 6)&1 ==true ?contentPage.append(btnParticipio): contentPage.prepend(btnParticipio);
+		
 		
 		/*Fin Metodo para revolver los botones*/
       	contadorItems = contadorItems+1;
 	})//Fin $.each
+	
+	
+	$("div[class='flex-item']").draggable({ revert: true,handle: "img" });
 	
 	//Atrapar los verbos no me la sabritas
 	$("#droppable").droppable({
@@ -241,12 +241,10 @@ function agregaItems(tipo){
 	$("#npage").text("1/"+contadorPage);
 		
 	$("a[id^=boton]").click(function() {
-		var audio = $("#mySoundClip")[0];
-		audio.play();
 		
 		var elementoSelec=$("#"+this.id);
 		
-		//Si no tiene la clase correcto no entra al cilco
+		//Si no tiene la clase correcto no entra al condicion
  		if(elementoSelec.hasClass( "correcto" )==false){
  			//se escucha la palabra solo en ingles
  			if(this.lang=='us'){
@@ -257,22 +255,22 @@ function agregaItems(tipo){
  				    window.speechSynthesis.speak(msg);
  			}
  			
- 			if(elementoSelec.hasClass( "push-down-active" )==true){
- 				elementoSelec.removeClass('push-down-active');
- 				elementoSelec.addClass('push-down');
+ 			if(elementoSelec.hasClass( "disabled" )==true){
+ 				elementoSelec.removeClass('disabled');
+ 				//elementoSelec.addClass('push-down');
  			}else{
- 				elementoSelec.addClass('push-down-active');
- 				elementoSelec.removeClass('push-down');
+ 				elementoSelec.addClass('disabled');
+ 				//elementoSelec.removeClass('push-down');
  			}
 		 				
  			if(pushFirst==null){
- 				pushFirst=this.id;
+ 				pushFirst=this;
  			}else{
- 				if($("#"+pushFirst)[0].rel==this.text.replace(/\s/g,"")){
+ 				if(pushFirst.rel==this.text.replace(/\s/g,"")){
  					
  					var audio = $("#soundCorrect")[0];
- 					var pushF=$("#"+pushFirst);
- 					audio.play();
+ 					var pushF=$(pushFirst);
+ 					
  					$("#aciertos").text(Number($("#aciertos").text())+1);
  					//si ya es correcto le agregamos la clase correcto
  					elementoSelec.addClass('correcto');
@@ -286,12 +284,11 @@ function agregaItems(tipo){
 		 			//por si vuelve a pulsar el boton pero es incorrecto
 		 			if(pushFirst!=this.id){
 		 				$("#fallos").text(Number($("#fallos").text())+1);
-		 				var audio = $("#soundInCorrect")[0];
-	 					audio.play();
+		 				
 		 			}
 		 			
-		 			elementoSelec.removeClass('push-down-active').addClass('push-down');;
-		 			$("#"+pushFirst).removeClass('push-down-active').addClass('push-down');
+		 			elementoSelec.removeClass('disabled');
+		 			$(pushFirst).removeClass('disabled');
 		 			pushFirst=null;
 		 		}
  			}

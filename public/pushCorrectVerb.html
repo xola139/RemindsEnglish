@@ -17,7 +17,7 @@
   	<link rel="stylesheet" type="text/css" href="css/materialize.css"  media="screen,projection"/>
   	<link rel="stylesheet" type="text/css" href="css/style.css" media="screen,projection"/>
   	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" media="screen,projection"/>
-  	<link rel="stylesheet" type="text/css" href="css/pushCorrect.css"  />
+  	<link rel="stylesheet" type="text/css" href="css/pushCorrectVerb.css"  />
  	<link rel="stylesheet" type="text/css" href="css/stilos.css">
  	<link rel="stylesheet" type="text/css" href="css/offline-language-spanish.css">
 </head>
@@ -42,11 +42,13 @@
 		  
 		  <i id="resetear" class="material-icons">loop</i>
 		</div>
-		Relaciona el verbo Ireggular en infinitivo, pasado y participio
+		Relaciona el verbo Irregular en infinitivo, pasado y participio
        </div>
     
     <div class="row center">
     	<div class="pages" >
+    	
+    	
     		<div id="contenedor" class="contenedorVerbos" >
     			<table>
     				<tr>
@@ -55,7 +57,7 @@
                  		</td>
                  		<td>
                  			<div id="droppable" class="ui-widget-header" style="width: 200px;height: 60px;">
-								<p><span id="numdesco">....</span>No me la<img src="img/sabritas.png" height="40" width="40"></p>
+								<p><span id="numdesco">....</span>No la conosco<img src="img/sabritas.png" height="40" width="40"></p>
 							</div>
                  		</td>
                  		<td>
@@ -63,7 +65,14 @@
                  		</td>
                  	</tr>
                  </table>
+                 <div class="row">
+				      <div class="col s3 relaciona">traduccion</div>
+				      <div class="col s3 relaciona">infinitvo</div>
+				      <div class="col s3 relaciona">pasado</div>
+				      <div class="col s3 relaciona">participio</div>
+				 </div>
             </div>
+            
 		</div>
 		
 	</div>	
@@ -81,7 +90,7 @@
   <script src="js/jquery.ui.touch-punch.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
-  <script src="js/pushCorrect.js"></script>
+  <script src="js/pushCorrectVerb.js"></script>
   
 
 
