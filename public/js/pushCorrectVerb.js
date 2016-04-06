@@ -7,13 +7,13 @@ window.addEventListener('load', function(e) {
 	  window.location.reload();
 	  
 	  if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-      // Browser downloaded a new app cache.
-      if (confirm('A new version of this site is available. Load it?')) {
-        window.location.reload();
-      }
-    } else {
-      // Manifest didn't changed. Nothing new to server.
-    }
+	      // Browser downloaded a new app cache.
+	      if (confirm('A new version of this site is available. Load it?')) {
+	        window.location.reload();
+	      }
+	  } else {
+		  // Manifest didn't changed. Nothing new to server.
+	  }
   }, false);
 
 }, false);
@@ -175,10 +175,10 @@ function agregaItems(tipo){
 		var dataPar = item.participio.replace(/\s/g,"");
 		
 		
-		var btnEspanol = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataEsp+"'  class='waves-effect waves-light btn' lang='mx' rel='"+dataInf+"'>"+item.traduccion+"</a></div>");
-		var btnInfinitivo = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataInf+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+item.infinitivo+"</a></div>");
-		var btnPasado = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataPas+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+item.pasado+"</a></div>");
-		var btnParticipio = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataPar+"'  class='waves-effect waves-light btn' lang='us' rel='"+dataEsp+"'>"+item.participio+"</a></div>");
+		var btnEspanol =    $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataEsp+"'  class='traduccion waves-effect waves-light btn' lang='mx' rel='"+index+"'>"+item.traduccion+"</a></div>");
+		var btnInfinitivo = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataInf+"'  class='infinitivo waves-effect waves-light btn' lang='us' rel='"+index+"'>"+item.infinitivo+"</a></div>");
+		var btnPasado =     $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataPas+"'  class='pasado waves-effect waves-light btn' lang='us' rel='"+index+"'>"+item.pasado+"</a></div>");
+		var btnParticipio = $("<div class='flex-item'><img src='img/move.png' class='imgmove' /><a id='boton_"+dataPar+"'  class='participio waves-effect waves-light btn' lang='us' rel='"+index+"'>"+item.participio+"</a></div>");
 		
 		//Variable para ubicar la pagina donde se dibujaran los botones
 		var contentPage = $("#page_"+ contadorPage);
@@ -240,60 +240,79 @@ function agregaItems(tipo){
 	
 	$("#npage").text("1/"+contadorPage);
 		
+	$("div[id^=ctn_]").click(function (){
+		var contenedor=this.id.replace("ctn_","");
+		var seleccionado=$("a[class*=presionado]");
+		
+		if(seleccionado.hasClass( contenedor )){
+			$(this).html(seleccionado.parent());
+		}
+		
+		
+		
+		console.log($("div[id^=ctn_]").find("div").find("a").length);
+		
+	});
+	
 	$("a[id^=boton]").click(function() {
+		$("a[id^=boton_]").removeClass('disabled');
+		$("a[id^=boton_]").removeClass('presionado');
 		
-		var elementoSelec=$("#"+this.id);
+		$(this).addClass('disabled');
+		$(this).addClass('presionado');
 		
-		//Si no tiene la clase correcto no entra al condicion
- 		if(elementoSelec.hasClass( "correcto" )==false){
- 			//se escucha la palabra solo en ingles
- 			if(this.lang=='us'){
- 				
- 				var msg = new SpeechSynthesisUtterance(this.text);
- 					msg.lang = 'en-US';
- 					msg.rate = 1.2;
- 				    window.speechSynthesis.speak(msg);
- 			}
- 			
- 			if(elementoSelec.hasClass( "disabled" )==true){
- 				elementoSelec.removeClass('disabled');
- 				//elementoSelec.addClass('push-down');
- 			}else{
- 				elementoSelec.addClass('disabled');
- 				//elementoSelec.removeClass('push-down');
- 			}
-		 				
- 			if(pushFirst==null){
- 				pushFirst=this;
- 			}else{
- 				if(pushFirst.rel==this.text.replace(/\s/g,"")){
- 					
- 					var audio = $("#soundCorrect")[0];
- 					var pushF=$(pushFirst);
- 					
- 					$("#aciertos").text(Number($("#aciertos").text())+1);
- 					//si ya es correcto le agregamos la clase correcto
- 					elementoSelec.addClass('correcto');
- 					pushF.addClass('correcto');
- 					
- 					elementoSelec.parent().find("img").remove();
- 					pushF.parent().find("img").remove();
- 					pushFirst=null;
-		 		}else{
-		 			
-		 			//por si vuelve a pulsar el boton pero es incorrecto
-		 			if(pushFirst!=this.id){
-		 				$("#fallos").text(Number($("#fallos").text())+1);
-		 				
-		 			}
-		 			
-		 			elementoSelec.removeClass('disabled');
-		 			$(pushFirst).removeClass('disabled');
-		 			pushFirst=null;
-		 		}
- 			}
-		 					
- 		}			
+//		var elementoSelec=$("#"+this.id);
+//		
+//		//Si no tiene la clase correcto no entra al condicion
+// 		if(elementoSelec.hasClass( "correcto" )==false){
+// 			//se escucha la palabra solo en ingles
+// 			if(this.lang=='us'){
+// 				
+// 				var msg = new SpeechSynthesisUtterance(this.text);
+// 					msg.lang = 'en-US';
+// 					msg.rate = 1.2;
+// 				    window.speechSynthesis.speak(msg);
+// 			}
+// 			
+// 			if(elementoSelec.hasClass( "disabled" )==true){
+// 				elementoSelec.removeClass('disabled');
+// 				//elementoSelec.addClass('push-down');
+// 			}else{
+// 				elementoSelec.addClass('disabled');
+// 				//elementoSelec.removeClass('push-down');
+// 			}
+//		 				
+// 			if(pushFirst==null){
+// 				pushFirst=this;
+// 			}else{
+// 				if(pushFirst.rel==this.text.replace(/\s/g,"")){
+// 					
+// 					var audio = $("#soundCorrect")[0];
+// 					var pushF=$(pushFirst);
+// 					
+// 					$("#aciertos").text(Number($("#aciertos").text())+1);
+// 					//si ya es correcto le agregamos la clase correcto
+// 					elementoSelec.addClass('correcto');
+// 					pushF.addClass('correcto');
+// 					
+// 					elementoSelec.parent().find("img").remove();
+// 					pushF.parent().find("img").remove();
+// 					pushFirst=null;
+//		 		}else{
+//		 			
+//		 			//por si vuelve a pulsar el boton pero es incorrecto
+//		 			if(pushFirst!=this.id){
+//		 				$("#fallos").text(Number($("#fallos").text())+1);
+//		 				
+//		 			}
+//		 			
+//		 			elementoSelec.removeClass('disabled');
+//		 			$(pushFirst).removeClass('disabled');
+//		 			pushFirst=null;
+//		 		}
+// 			}
+//		 					
+// 		}			
 	});//fin $("a[id^=boton]")
 	
 	
