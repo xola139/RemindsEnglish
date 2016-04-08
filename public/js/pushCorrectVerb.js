@@ -241,11 +241,36 @@ function agregaItems(tipo){
 	$("#npage").text("1/"+contadorPage);
 		
 	$("div[id^=ctn_]").click(function (){
-		var contenedor=this.id.replace("ctn_","");
+
+		var contenedor=this;
 		var seleccionado=$("a[class*=presionado]");
 		
-		if(seleccionado.hasClass( contenedor )){
+		if(seleccionado.hasClass( contenedor.id.replace("ctn_","") )){
 			$(this).html(seleccionado.parent());
+			seleccionado.removeClass('disabled');
+			seleccionado.removeClass('presionado');
+			seleccionado.parent().find("img").hide();
+			var contenedores=$("div[id^=ctn_]").find("div").find("a");
+			
+			if(contenedores.length == 4){
+				
+				for(i = 0;i < contenedores.length;i++){
+					var tmpCnt=$(contenedores[i]);
+					var nombre=tmpCnt.closest('.relaciona');
+					console.log(nombre)
+					nombre.html(nombre[0].id.replace("ctn_",""));
+					
+				}
+			}
+			
+		}else{
+			$(contenedor).animate({
+		          backgroundColor: "#f44336"
+		          
+		        }, 500 ).animate({
+		          backgroundColor: "#fff"
+		          
+		        }, 500 );
 		}
 		
 		
